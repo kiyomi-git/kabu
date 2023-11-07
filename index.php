@@ -1,6 +1,4 @@
 <?php require '../header.php'; ?>
-
-<h3>-新規登録-</h3>
 <form action="index-out.php" method="post">
     <table>
         <tr>
