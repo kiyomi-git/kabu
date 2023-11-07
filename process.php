@@ -31,13 +31,12 @@ if (isset($_SESSION['company'])) {
     $companyData['et'] = (($assets - $liabilities) / 1000000); // 自己資本
     $companyData['er'] = (($companyData['et'] * 1000000) / ($net_assets + $liabilities) * 100); // 自己資本比率
     $companyData['etar'] = ($revenue / $assets); // 総資本回転率
-    $companyData['dpr'] = (($dividend / $companyData['eps']) * 100); // 配当性向
     $companyData['dy'] = (($dividend / $stock_price) * 100); // 配当利回り
     $companyData['pcfr'] = ($stock_price / $companyData['eps']); // PCFR（株価キャッシュフロー倍率）
     $companyData['eps_cash_flow'] = ($cash_flow / $stock_count); // 1株当たりのキャッシュフロー
     
     $pdo = new PDO('mysql:host=localhost;dbname=kabu;charset=utf8', 'root');
-    $sql = $pdo->prepare('INSERT INTO index_date VALUES (?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)');
+    $sql = $pdo->prepare('INSERT INTO index_date VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)');
     $sql->execute([
         $companyData['company_name'], 
         $companyData['date'],
@@ -51,7 +50,6 @@ if (isset($_SESSION['company'])) {
         $companyData['et'],
         $companyData['er'],
         $companyData['etar'],
-        $companyData['dpr'],
         $companyData['dy'],
         $companyData['pcfr'],
         $companyData['eps_cash_flow']
@@ -78,7 +76,6 @@ if (isset($_SESSION['company'])) {
     echo '<tr><th>総資本回転率</th><td>', number_format($companyData['etar'], 2), '回</td></tr>';
         
     echo '<tr><th><h3>-配当関連指標-</h3></th></tr>';
-    echo '<tr><th>配当性向</th><td>', number_format($companyData['dpr'], 2), '％</td></tr>';
     echo '<tr><th>配当利回り</th><td>', number_format($companyData['dy'], 2), '％</td></tr>';
     
     echo '<tr><th><h3>-キャッシュフロー関連指標-</h3></th></tr>';
